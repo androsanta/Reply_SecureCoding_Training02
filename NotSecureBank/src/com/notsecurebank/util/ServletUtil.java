@@ -247,6 +247,11 @@ public class ServletUtil {
         return user;
     }
 
+    public static boolean isAdmin(HttpServletRequest request) {
+        User user = this.getUser(request);
+        return user.getRole() != null && user.getRole() == User.Role.Admin;
+    }
+
     public static boolean isPreApprovedForGoldVisa(HttpServletRequest request) {
         LOG.debug("isPreApprovedForGoldVisa");
 

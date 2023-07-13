@@ -85,6 +85,11 @@ public class AdminAPI extends NotSecureBankAPI {
             return Response.status(400).entity(response).build();
         }
 
+        if (!ServletUtil.isAdmin(request)) {
+            String response = "{\"Error\" : \"Unauthorized\"}";
+            return Response.status(401).entity(response).build();
+        }
+
         String firstname;
         String lastname;
         String username;
