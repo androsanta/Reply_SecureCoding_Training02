@@ -45,6 +45,7 @@ public class FeedbackAPI extends NotSecureBankAPI {
         String comments;
 
         try {
+            // V7_Stored XSS Also
             name = ServletUtil.sanitizeWeb((String) myJson.get("name"));
             email = ServletUtil.sanitizeWeb((String) myJson.get("email"));
             subject = ServletUtil.sanitizeWeb((String) myJson.get("subject"));
