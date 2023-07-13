@@ -16,6 +16,7 @@
 			content = "default.htm";
 		else
 			content = request.getParameter("content");
+			content = ServletUtil.sanitizeHtmlWithRegex(content);
 			content = "static/"+content;
 		%>
 		
