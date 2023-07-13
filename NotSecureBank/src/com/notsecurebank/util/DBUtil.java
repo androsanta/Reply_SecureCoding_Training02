@@ -439,8 +439,10 @@ public class DBUtil {
 
         try {
             Connection connection = getConnection();
-            Statement statement = connection.createStatement();
-            statement.execute("INSERT INTO ACCOUNTS (USERID,ACCOUNT_NAME,BALANCE) VALUES ('" + username + "','" + acctType + "', 0)");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO ACCOUNTS (USERID,ACCOUNT_NAME,BALANCE) VALUES (?, ?, 0)");
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, acctType);
+            preparedStatement.executeQuery();
             return null;
         } catch (SQLException e) {
             LOG.error(e.toString());
@@ -548,7 +550,7 @@ public class DBUtil {
                 }
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException e) {f
             LOG.error(e.toString());
             throw e;
         }
