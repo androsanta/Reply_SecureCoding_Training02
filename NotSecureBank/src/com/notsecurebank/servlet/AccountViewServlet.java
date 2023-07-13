@@ -1,6 +1,7 @@
 package com.notsecurebank.servlet;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+
+import com.notsecurebank.util.ServletUtil;
 
 public class AccountViewServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -49,6 +52,14 @@ public class AccountViewServlet extends HttpServlet {
         if (request.getRequestURL().toString().endsWith("showTransactions")) {
             String startTime = request.getParameter("startDate");
             String endTime = request.getParameter("endDate");
+
+            if (!ServletUtil.isValidInputDate(startTime)) {
+                startTime = null;
+            }
+
+            if (!ServletUtil.isValidInputDate(endTime)) {
+                endTime = ServletUtil.dateFormat.format(new Date());
+            }
 
             LOG.info("Transactions within '" + startTime + "' and '" + endTime + "'.");
             RequestDispatcher dispatcher = request.getRequestDispatcher("/bank/transaction.jsp?" + ((startTime != null) ? "&startTime=" + startTime : "") + ((endTime != null) ? "&endTime=" + endTime : ""));

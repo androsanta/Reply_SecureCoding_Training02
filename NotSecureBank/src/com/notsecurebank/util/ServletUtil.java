@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.regex.Pattern;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -42,6 +43,8 @@ public class ServletUtil {
     public static final String LEGAL_EMAIL_ADDRESS = "^[\\w\\d\\.\\%-]+@[\\w\\d\\.\\%-]+\\.\\w{2,4}$";
 
     public static final Pattern XSS_REGEXP = Pattern.compile(".*(?:(<|\\%3c)(\\/|%2f|\\s|\\\u3000)*(script|img|javascript).*(>|%3e)|javascript(:|%3a)|(onblur|onchange|onfocus|onreset|onselect|onsubmit|onabort|onerror|onkeydown|onkeypress|onkeyup|onclick|ondblclick|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|onload|onunload|ondragdrop|onmove|onresize|style)=).*", Pattern.CASE_INSENSITIVE);
+
+    public static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public static String[] searchArticles(String query, String path) {
         LOG.debug("searchArticles('" + query + "', '" + path + "')");
@@ -276,5 +279,15 @@ public class ServletUtil {
         String specialPrizeCode = UUID.randomUUID().toString();
         request.getSession().setAttribute("specialPrizeCode", specialPrizeCode);
         return specialPrizeCode;
+    }
+
+    public static boolean isValidInputDate(String date) {
+        // format yyyy-mm-dd
+        try {
+            dateFormat.parse(date);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
