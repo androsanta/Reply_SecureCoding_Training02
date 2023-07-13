@@ -45,10 +45,10 @@ public class FeedbackAPI extends NotSecureBankAPI {
         String comments;
 
         try {
-            name = (String) myJson.get("name");
-            email = (String) myJson.get("email");
-            subject = (String) myJson.get("subject");
-            comments = (String) myJson.get("message");
+            name = ServletUtil.sanitizeWeb((String) myJson.get("name"));
+            email = ServletUtil.sanitizeWeb((String) myJson.get("email"));
+            subject = ServletUtil.sanitizeWeb((String) myJson.get("subject"));
+            comments = ServletUtil.sanitizeWeb((String) myJson.get("message"));
         } catch (JSONException e) {
             LOG.error(e.toString());
             return Response.status(400).entity("{\"Error\": \"Body does not contain all the correct attributes\"}").build();

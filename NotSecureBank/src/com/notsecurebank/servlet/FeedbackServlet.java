@@ -12,6 +12,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import com.notsecurebank.util.OperationsUtil;
+import com.notsecurebank.util.ServletUtil;
 
 public class FeedbackServlet extends HttpServlet {
 
@@ -28,12 +29,12 @@ public class FeedbackServlet extends HttpServlet {
             return;
         }
 
-        String name = request.getParameter("name");
+        String name = ServletUtil.sanitizeWeb(request.getParameter("name"));
         if (name != null) {
             request.setAttribute("message_feedback", name);
-            String email = request.getParameter("email_addr");
-            String subject = request.getParameter("subject");
-            String comments = request.getParameter("comments");
+            String email = ServletUtil.sanitizeWeb(request.getParameter("email_addr"));
+            String subject = ServletUtil.sanitizeWeb(request.getParameter("subject"));
+            String comments = ServletUtil.sanitizeWeb(request.getParameter("comments"));
             // store feedback in the DB - display their feedback once submitted
 
             String feedbackId = OperationsUtil.sendFeedback(name, email, subject, comments);
